@@ -27,28 +27,37 @@ function MessageBubble({ message }: { message: Message }) {
 		<View
 			className={`mb-4 max-w-[85%] ${message.isUser ? "self-end" : "self-start"}`}
 		>
-			{/* Softer corners and uniform rounding */}
 			<View
-				className={`rounded-3xl px-4 py-3 ${message.isUser ? "bg-primary" : "bg-secondary/80"}`}
+				className={`rounded-2xl px-4 py-3 ${
+					message.isUser
+						? "bg-primary"
+						: "bg-secondary/90"
+				}`}
 				style={{
 					shadowColor: "#000",
-					shadowOffset: { width: 0, height: 1.5 },
-					// Subtler shadows
-					shadowOpacity: 0.08,
+					shadowOffset: { width: 0, height: 2 },
+					shadowOpacity: 0.1,
 					shadowRadius: 3,
-					elevation: 2
+					elevation: 2,
+					borderWidth: 1,
+					borderColor: message.isUser ? "rgba(212, 175, 55, 0.3)" : "rgba(51, 51, 51, 0.2)",
 				}}
 			>
 				<Text
-					className={`${message.isUser
-						? "text-primary-foreground"
-						: "text-secondary-foreground"} text-base`}
+					className={`${
+						message.isUser
+							? "text-primary-foreground"
+							: "text-secondary-foreground"
+					} text-base leading-5`}
 				>
 					{message.text}
 				</Text>
 			</View>
-			{/* Refined timestamp */}
-			<Text className={`text-[11px] text-muted-foreground/80 mt-1.5 ${message.isUser ? 'text-right mr-1' : 'text-left ml-1'}`}>
+			<Text
+				className={`text-[11px] text-muted-foreground/70 mt-1 ${
+					message.isUser ? 'text-right mr-1' : 'text-left ml-1'
+				}`}
+			>
 				{formattedTime}
 			</Text>
 		</View>
@@ -69,8 +78,8 @@ function WelcomeMessage({ onSelectSuggestion }: { onSelectSuggestion: (text: str
 		<View className="items-center justify-center mb-6 mt-10">
 			<Image
 				source={require('@/assets/images/bible-chat-logo.png')}
-				// Making logo much smaller
-				className="h-8 w-8 rounded-full mb-2"
+				style={{ width: 120, height: 120, resizeMode: 'contain' }}
+				className="rounded-lg mb-4"
 			/>
 			<Text className="text-foreground text-xl font-semibold mb-2">Welcome to Bible Chat</Text>
 			<Text className="text-muted-foreground text-center px-6 mb-6">
@@ -92,10 +101,21 @@ function WelcomeMessage({ onSelectSuggestion }: { onSelectSuggestion: (text: str
 
 function SuggestionChip({ text, onPress }: { text: string; onPress: () => void }) {
 	return (
-		<TouchableOpacity onPress={onPress}>
-			{/* Refined chip styling */}
-			<View className="bg-secondary/70 px-3.5 py-2 rounded-xl my-1 border border-border/10">
-				<Text className="text-secondary-foreground text-sm">{text}</Text>
+		<TouchableOpacity
+			onPress={onPress}
+			activeOpacity={0.7}
+		>
+			<View
+				className="bg-muted px-4 py-2.5 rounded-xl my-1 border border-primary/20"
+				style={{
+					shadowColor: "#000",
+					shadowOffset: { width: 0, height: 1 },
+					shadowOpacity: 0.08,
+					shadowRadius: 2,
+					elevation: 1,
+				}}
+			>
+				<Text className="text-secondary-foreground text-sm font-medium">{text}</Text>
 			</View>
 		</TouchableOpacity>
 	);
@@ -130,18 +150,21 @@ export default function ChatScreen() {
 
 	return (
 		<SafeAreaView className="flex-1 bg-background">
-			<StatusBar barStyle="light-content" backgroundColor="#1f2937" />
+			<StatusBar barStyle="light-content" backgroundColor="#121212" />
 
 			<View
-				// Refined header: removed shadow, adjusted padding
-				className="px-4 py-2.5 flex-row items-center bg-background border-b border-border/40"
-				// style prop removed
+				className="px-4 py-3.5 flex-row items-center justify-between bg-background border-b border-border/40"
 			>
-				<Text className="text-foreground font-semibold text-lg flex-1">Bible Chat</Text>
-				{/* Adjusted icon padding and color */}
-				<TouchableOpacity className="p-1.5 mr-[-6px]">
-					{/* TODO: Replace with actual theme color if needed */}
-					<Ionicons name="menu-outline" size={26} className="text-muted-foreground" />
+				<View className="flex-row items-center">
+					<Image
+						source={require('@/assets/images/bible-chat-logo.png')}
+						style={{ width: 30, height: 30, resizeMode: 'contain' }}
+						className="mr-3"
+					/>
+					<Text className="text-foreground font-semibold text-lg">Bible Chat</Text>
+				</View>
+				<TouchableOpacity className="p-1.5 rounded-full bg-muted/50">
+					<Ionicons name="menu-outline" size={24} color="#D4AF37" />
 				</TouchableOpacity>
 			</View>
 
@@ -164,7 +187,7 @@ export default function ChatScreen() {
 				)}
 				{isLoading && (
 					<View className="self-start bg-secondary/80 rounded-2xl px-6 py-4 rounded-bl-none mb-4" style={{ elevation: 2 }}>
-						<ActivityIndicator size="small" color="#e5e7eb" />
+						<ActivityIndicator size="small" color="#D4AF37" />
 					</View>
 				)}
 				{error && (
@@ -181,33 +204,27 @@ export default function ChatScreen() {
 				behavior={Platform.OS === "ios" ? "padding" : undefined}
 				keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}
 			>
-				{/* Refined Input Area Container */}
 				<View className="border-t border-border/40 bg-background/95">
-					<View className="flex-row items-center p-2.5 pb-3.5">
+					<View className="flex-row items-center p-3 pb-4">
 						<Input
 							ref={inputRef}
 							value={inputText}
 							onChangeText={setInputText}
 							placeholder="Ask about the Bible..."
-							// placeholderTextColor removed, should inherit
-							// Adjusted background, border, padding, removed inline shadow
-							className="flex-1 mr-2.5 bg-input/60 border border-input/30 rounded-2xl px-4 py-2.5 text-base native:py-3"
+							className="flex-1 mr-3 bg-input/60 border border-input/30 rounded-2xl px-4 py-3 text-base"
 							onSubmitEditing={handleSend}
 							multiline
-							blurOnSubmit={false} // Keep true if you want keyboard to dismiss on send
+							blurOnSubmit={false}
 							style={{
-								minHeight: 46, // Adjusted height
+								minHeight: 46,
 								maxHeight: 120,
-								// Inline shadow removed
 							}}
 						/>
 						<Button
 							variant="default"
-							// Adjusted size, removed inline shadow
-							className={`rounded-full h-11 w-11 items-center justify-center p-0 ${!inputText.trim() || isLoading ? 'opacity-60' : ''}`}
+							className={`rounded-full h-12 w-12 items-center justify-center p-0 ${!inputText.trim() || isLoading ? 'opacity-60' : ''}`}
 							onPress={handleSend}
 							disabled={isLoading || !inputText.trim()}
-							// style prop removed to rely on variant styles
 						>
 							<Ionicons name="arrow-up" size={22} color="#FFFFFF" />
 						</Button>
