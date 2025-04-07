@@ -1,18 +1,23 @@
 {
-	"extends": "expo/tsconfig.base.json",
-	"compilerOptions": {
-		"strict": true,
-		"moduleResolution": "bundler",
-		"paths": {
-			"@/*": ["./*"],
-			"~/lib/*": ["./lib/*"]
-		}
-	},
-	"include": [
-		"**/*.ts",
-		"**/*.tsx",
-		".expo/types/**/*.ts",
-		"expo-env.d.ts",
-		"types/**/*.ts"
-	]
+  "extends": "expo/tsconfig.base.json",
+  "compilerOptions": {
+    "strict": true,
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "~/lib/*": [
+        "./lib/*"
+      ]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts",
+    "types/**/*.ts",
+    "nativewind-env.d.ts"
+  ]
 }
