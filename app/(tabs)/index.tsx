@@ -1,31 +1,33 @@
-import { StyleSheet } from 'react-native';
+import { View, Text, SafeAreaView, TextInput } from "react-native";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { styled } from "nativewind";
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+const StyledSafeAreaView = styled(SafeAreaView);
+const StyledView = styled(View);
+const StyledText = styled(Text);
+const StyledInput = styled(Input);
 
-export default function TabOneScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
-  );
+export default function ChatScreen() {
+	return (
+		<StyledSafeAreaView className="flex-1 bg-background">
+			<StyledView className="flex-1 p-4">
+				<StyledText className="text-foreground">
+					Messages will appear here...
+				</StyledText>
+			</StyledView>
+
+			<StyledView className="flex-row items-center p-4 border-t border-border">
+				<StyledInput
+					placeholder="Ask a question..."
+					placeholderTextColor="#a1a1aa"
+					className="flex-1 mr-2 bg-input text-foreground border-0"
+				/>
+				<Button>
+					{/* Button text will use default defined in component, or we can customize */}
+					{/* Example: <Text className="text-primary-foreground">Send</Text> */}
+				</Button>
+			</StyledView>
+		</StyledSafeAreaView>
+	);
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
