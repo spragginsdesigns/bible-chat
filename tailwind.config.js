@@ -6,6 +6,7 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
+				// Reverting to original Gold/Black Theme
 				border: "#333333", // Dark grey border
 				input: "#404040", // Slightly lighter grey for input backgrounds
 				ring: "#D4AF37", // Gold for focus rings

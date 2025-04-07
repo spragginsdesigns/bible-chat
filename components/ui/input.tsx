@@ -12,7 +12,7 @@ const Input = React.forwardRef<React.ElementRef<typeof TextInput>, TextInputProp
           props.editable === false && 'opacity-50 web:cursor-not-allowed',
           className
         )}
-        placeholderClassName={cn('text-muted-foreground', placeholderClassName)}
+        // placeholderClassName is handled by the placeholder: variant in className
         {...props}
       />
     );
