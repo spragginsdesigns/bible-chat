@@ -37,8 +37,8 @@ Bible AI Explorer is a powerful mobile application that leverages AI to help use
 
 1. **Clone this repository**:
    ```bash
-   git clone https://github.com/yourusername/bible-ai-explorer-mobile.git
-   cd bible-ai-explorer-mobile
+   git clone https://github.com/spragginsdesigns/bible-chat.git
+   cd bible-chat
    ```
 
 2. **Install dependencies**:
